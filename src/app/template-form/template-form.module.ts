@@ -1,5 +1,6 @@
-import { CampoControlErroComponent } from './../campo-control-erro/campo-control-erro.component';
-import { FormDebugComponent } from './../form-debug/form-debug.component';
+import { SharedModule } from './../shared/shared.module';
+import { CampoControlErroComponent } from '../shared/campo-control-erro/campo-control-erro.component';
+import { FormDebugComponent } from '../shared/form-debug/form-debug.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -8,13 +9,12 @@ import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    TemplateFormComponent,
-    FormDebugComponent,
-    CampoControlErroComponent
+    TemplateFormComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class TemplateFormModule { }
