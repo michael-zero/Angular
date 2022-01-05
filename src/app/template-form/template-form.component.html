@@ -39,13 +39,14 @@
   <div ngModelGroup="endereco">
       <div class="form-group" [ngClass]="aplicaCSSdeErro(cep)">
         <div class="form-row">
+          <!-- CEP -->
           <div class="col-md-3">
               <label for="cep" class="control-label">CEP</label>
-              <input type="text" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"/>
+              <input type="text" (blur)="consultarCEP(cep.value)" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"/>
               <app-campo-control-erro msgErro="CEP é obrigatório" [mostrarErro]="verificaValidTouched(cep)"></app-campo-control-erro>
 
           </div>
-
+          <!-- NUMERO -->
           <div class="col-md-3">
             <label for="numero" class="control-label">Número</label>
             <input type="text" class="form-control" id="numero" name="numero" ngModel required #numero="ngModel"/>
