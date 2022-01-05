@@ -106,6 +106,7 @@
   </div>
 
   <button [disabled]="!f.valid" class="btn btn-primary" type="submit">Enviar</button>
+  <button class="btn btn-primary" (click)="resetar(f)">Cancelar</button>
 
   <app-form-debug [form]="f"></app-form-debug>
 </form>

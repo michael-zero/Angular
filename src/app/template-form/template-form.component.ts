@@ -26,7 +26,10 @@ export class TemplateFormComponent implements OnInit {
     console.log(f)
     // console.log(this.usuario)
     this.http.post('https://httpbin.org/post', JSON.stringify(f.value))
-    .subscribe(dados => console.log(dados))
+    .subscribe(dados => {
+      console.log(dados)
+      f.form.reset()
+    })
   }
 
   verificaValidTouched(campo:any){
@@ -91,6 +94,10 @@ export class TemplateFormComponent implements OnInit {
          cidade: null,
          estado: null
      }})
+  }
+
+  resetar(f: NgForm){
+    f.form.reset()
   }
 
 }
