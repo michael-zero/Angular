@@ -32,7 +32,9 @@
     <input type="text" class="form-control" id="curso" name="curso" [ngModel]="usuario.curso" placeholder="Math">
   </div>
 
-  <button class="btn btn-primary" type="submit">Enviar</button>
+  <button [disabled]="!f.valid" class="btn btn-primary" type="submit">Enviar</button>
+
+  <app-form-debug [form]="f"></app-form-debug>
 </form>
 
 
