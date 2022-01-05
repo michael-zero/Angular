@@ -7,7 +7,7 @@
     </div>
 
     <div class="col-sm-12">
-      <input  type="text" class="form-control" id="nome" name="nome" placeholder="Nome" required>
+      <input  type="text" class="form-control" id="nome" formControlName="nome" placeholder="Nome" required>
 
       <!-- <app-campo-control-erro msgErro="Nome é obrigatório." [mostrarErro]="verificaValidTouched(nome)"></app-campo-control-erro> -->
     </div>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="col-sm-12">
-      <input email type="email" class="form-control" id="email" name="email" required placeholder="nome@email.com">
+      <input email type="email" class="form-control" id="email" formControlName="email" required placeholder="nome@email.com">
       <!-- <app-campo-control-erro msgErro="E-mail inválido." [mostrarErro]="verificaValidTouched(email)"></app-campo-control-erro> -->
     </div>
     </div>
