@@ -45,26 +45,50 @@ export class TemplateFormComponent implements OnInit {
       var validacep = /^[0-9]{8}$/;
       //Valida o formato do CEP.
       if(validacep.test(cep)) {
+        this.resetaDadosForm(form)
         this.http.get("https://viacep.com.br/ws/"+ cep +"/json")
         .subscribe(dado => this.popularDadosForm(dado, form))
       }
     }
   }
 
-  popularDadosForm(dados: any, form: NgForm){
-    form.setValue( {
-      nome: form.value.nome,
-      email: form.value.email,
-      endereco: {
-        cep: dados.cep,
-        numero: '' ,
-        complemento: dados.complemento,
-        rua: dados.logradouro,
-        bairro: dados.bairro,
-        cidade: dados.localidade,
-        estado: dados.uf
-      }
-    })
+  popularDadosForm(dados: any, formulario: NgForm){
+    // formulario.setValue( {
+    //   nome: formulario.value.nome,
+    //   email: formulario.value.email,
+    //   endereco: {
+    //     cep: dados.cep,
+    //     numero: '' ,
+    //     complemento: dados.complemento,
+    //     rua: dados.logradouro,
+    //     bairro: dados.bairro,
+    //     cidade: dados.localidade,
+    //     estado: dados.uf
+    //   }
+    // })
+
+  formulario.form.patchValue(
+   {
+     endereco: {
+      complemento: dados.complemento,
+      rua: dados.logradouro,
+      bairro: dados.bairro,
+      cidade: dados.localidade,
+      estado: dados.uf
+  }})
+
+  }
+
+  resetaDadosForm(formulario: NgForm){
+    formulario.form.patchValue(
+      {
+        endereco: {
+         complemento: null,
+         rua: null,
+         bairro:null,
+         cidade: null,
+         estado: null
+     }})
   }
 
 }
