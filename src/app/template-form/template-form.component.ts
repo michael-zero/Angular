@@ -37,7 +37,7 @@ export class TemplateFormComponent implements OnInit {
     }
   }
 
-  consultarCEP(cep: any){
+  consultarCEP(cep: any, form: NgForm){
     //Nova variável "cep" somente com dígitos.
     cep = cep.replace(/\D/g, '');
     if (cep != "") {
@@ -46,9 +46,25 @@ export class TemplateFormComponent implements OnInit {
       //Valida o formato do CEP.
       if(validacep.test(cep)) {
         this.http.get("https://viacep.com.br/ws/"+ cep +"/json")
-        .subscribe(dado => console.log(dado))
+        .subscribe(dado => this.popularDadosForm(dado, form))
       }
     }
+  }
+
+  popularDadosForm(dados: any, form: NgForm){
+    form.setValue( {
+      nome: form.value.nome,
+      email: form.value.email,
+      endereco: {
+        cep: dados.cep,
+        numero: '' ,
+        complemento: dados.complemento,
+        rua: dados.logradouro,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    })
   }
 
 }

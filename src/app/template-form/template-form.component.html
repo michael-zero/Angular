@@ -42,7 +42,7 @@
           <!-- CEP -->
           <div class="col-md-3">
               <label for="cep" class="control-label">CEP</label>
-              <input type="text" (blur)="consultarCEP(cep.value)" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"/>
+              <input type="text" (blur)="consultarCEP(cep.value, f)" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"/>
               <app-campo-control-erro msgErro="CEP é obrigatório" [mostrarErro]="verificaValidTouched(cep)"></app-campo-control-erro>
 
           </div>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="col-sm-12">
-          <input #rua="ngModel" readonly type="text" class="form-control" id="rua" name="rua" [(ngModel)]="usuario.rua" placeholder="rua" required>
+          <input #rua="ngModel" readonly type="text" class="form-control" id="rua" name="rua" ngModel placeholder="rua" required>
           <app-campo-control-erro msgErro="Rua é obrigatório." [mostrarErro]="verificaValidTouched(rua)"></app-campo-control-erro>
 
         </div>
