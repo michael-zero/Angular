@@ -25,6 +25,8 @@ export class TemplateFormComponent implements OnInit {
   handleSubmit(f: NgForm){
     console.log(f)
     // console.log(this.usuario)
+    this.http.post('https://httpbin.org/post', JSON.stringify(f.value))
+    .subscribe(dados => console.log(dados))
   }
 
   verificaValidTouched(campo:any){
