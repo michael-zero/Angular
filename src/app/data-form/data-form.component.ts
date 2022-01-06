@@ -23,13 +23,17 @@ export class DataFormComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
       email: [null, [Validators.required, Validators.email]],
-      cep: [null, [Validators.required]],
-      numero: [null, [Validators.required]],
-      complemento:[null] ,
-      rua:[null,Validators.required],
-      bairro:[null,Validators.required] ,
-      cidade:[null,Validators.required] ,
-      estado:[null,Validators.required]
+
+      endereco: this.formBuilder.group(
+       {
+        cep: [null, [Validators.required]],
+        numero: [null, [Validators.required]],
+        complemento:[null] ,
+        rua:[null,Validators.required],
+        bairro:[null,Validators.required] ,
+        cidade:[null,Validators.required] ,
+        estado:[null,Validators.required]
+       })
     })
   }
 
@@ -63,5 +67,50 @@ export class DataFormComponent implements OnInit {
   resetar(){
     this.formulario.reset()
   }
+
+  consultarCEP(){
+    let campoCEP = this.formulario.get('endereco.cep')
+    let cep = campoCEP?.value
+
+    cep = cep.replace(/\D/g, '');
+    if (cep != "") {
+      //Expressão regular para validar o CEP.
+      var validacep = /^[0-9]{8}$/;
+      //Valida o formato do CEP.
+      if(validacep.test(cep)) {
+        this.resetaDadosForm()
+        this.http.get("https://viacep.com.br/ws/"+ cep +"/json")
+        .subscribe(dado => this.popularDadosForm(dado))
+      }
+    }
+  }
+
+  popularDadosForm(dados: any){
+    this.formulario.patchValue(
+    {
+      endereco: {
+        complemento: dados.complemento,
+        rua: dados.logradouro,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+    }})
+
+    this.formulario.get('nome')?.setValue("robot exe")
+
+  }
+
+  resetaDadosForm(){
+    this.formulario.patchValue(
+      {
+        endereco: {
+         complemento: null,
+         rua: null,
+         bairro:null,
+         cidade: null,
+         estado: null
+     }})
+  }
+
 
 }
