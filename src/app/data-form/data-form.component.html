@@ -125,13 +125,26 @@
       </select>
 
     </div>
+
+    <div class="col-md-3" [ngClass]="aplicaCSSdeErro('tecnologias')">
+      <label for="tecnologias" class="control-label">Tecnologias</label>
+      <!-- Criando o Select para cargo -->
+      <select multiple id="tecnologias" formControlName="tecnologias" class="form-control" >
+          <option *ngFor="let tecnologia of tecnologias" [value]="tecnologia.nome">{{tecnologia.desc}}</option>
+      </select>
+
+    </div>
+
     </div>
   </div>
+
+
 
   <!-- BTNS -->
 
   <button class="btn btn-primary" type="submit">Enviar</button>
   <button class="btn btn-info" (click)="setarCargo()">Cargo</button>
+  <button class="btn btn-info" (click)="setarTecnologias()">Tecnologias</button>
   <button class="btn btn-warning" (click)="resetar()">Cancelar</button>
 
   <app-form-debug [form]="formulario"></app-form-debug>
