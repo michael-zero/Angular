@@ -7,9 +7,16 @@
     </div>
 
     <div class="col-sm-12">
-      <input  type="text" class="form-control" id="nome" formControlName="nome" placeholder="Nome" required>
+      <input  type="text" class="form-control" [ngClass]="aplicaCSSdeErro('nome')" id="nome" formControlName="nome" placeholder="Nome" required>
 
-      <!-- <app-campo-control-erro msgErro="Nome é obrigatório." [mostrarErro]="verificaValidTouched(nome)"></app-campo-control-erro> -->
+      <!-- <div *ngIf="verificaValidTouched('nome')"
+        class="alert alert-danger" role="alert"
+        >
+          Nome é obrigatório.
+      </div> -->
+      <app-campo-control-erro msgErro="Nome é obrigatório."
+      [mostrarErro]="verificaValidTouched('nome')"></app-campo-control-erro>
+
     </div>
     </div>
 
@@ -23,8 +30,9 @@
     </div>
 
     <div class="col-sm-12">
-      <input email type="email" class="form-control" id="email" formControlName="email" required placeholder="nome@email.com">
-      <!-- <app-campo-control-erro msgErro="E-mail inválido." [mostrarErro]="verificaValidTouched(email)"></app-campo-control-erro> -->
+      <input email type="email"  [ngClass]="aplicaCSSdeErro('email')" class="form-control" id="email" formControlName="email" required placeholder="nome@email.com">
+      <app-campo-control-erro msgErro="E-mail é obrigatório." [mostrarErro]="verificaValidTouched('email')"></app-campo-control-erro>
+      <app-campo-control-erro msgErro="E-mail inválido." [mostrarErro]="verificaEmailInvalido()"></app-campo-control-erro>
     </div>
     </div>
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -21,18 +21,36 @@ export class DataFormComponent implements OnInit {
     // })
 
     this.formulario = this.formBuilder.group({
-      nome: [null],
-      email: [null]
+      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
+      email: [null, [Validators.required, Validators.email]]
     })
   }
 
   handleSubmit(){
-    // console.log(this.formulario.value)
+    // console.log(this.formulario)
     this.http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
     .subscribe(dados => {
       console.log(dados)
-      this.formulario.reset()
+      // this.formulario.reset()
     })
+  }
+
+  verificaValidTouched(campo:any) : boolean {
+    return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched as boolean
+  }
+
+  verificaEmailInvalido(){
+    let campoEmail = this.formulario.get('email')
+    if(campoEmail?.errors){
+        return campoEmail.errors['email'] && campoEmail.touched
+    }
+  }
+
+  aplicaCSSdeErro(campo:any){
+    return {
+      'has-error': this.verificaValidTouched(campo),
+      'is-invalid': this.verificaValidTouched(campo)
+    }
   }
 
   resetar(){
