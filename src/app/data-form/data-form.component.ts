@@ -59,7 +59,8 @@ export class DataFormComponent implements OnInit {
        ,
        cargo: [null],
        tecnologias: [null],
-       newsletter: ['s']
+       newsletter: ['s'],
+       termos: [null, Validators.pattern('true')]
     })
   }
 
@@ -101,7 +102,7 @@ export class DataFormComponent implements OnInit {
 
   aplicaCSSdeErro(campo:string){
     return {
-      'has-error': this.verificaValidTouched(campo),
+      // 'has-error': this.verificaValidTouched(campo),
       'is-invalid': this.verificaValidTouched(campo)
     }
   }
