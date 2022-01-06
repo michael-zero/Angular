@@ -1,3 +1,4 @@
+import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { Component, OnInit } from '@angular/core';
 import { EstadoBr } from './../shared/models/estado-br';
 import { DropdownService } from './../shared/services/dropdown.service';
@@ -17,7 +18,8 @@ export class DataFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private dropdownService: DropdownService
+    private dropdownService: DropdownService,
+    private cepService: ConsultaCepService
     ) { }
 
   ngOnInit(): void {
@@ -99,16 +101,9 @@ export class DataFormComponent implements OnInit {
     let campoCEP = this.formulario.get('endereco.cep')
     let cep = campoCEP?.value
 
-    cep = cep.replace(/\D/g, '');
-    if (cep != "") {
-      //Expressão regular para validar o CEP.
-      var validacep = /^[0-9]{8}$/;
-      //Valida o formato do CEP.
-      if(validacep.test(cep)) {
-        this.resetaDadosForm()
-        this.http.get("https://viacep.com.br/ws/"+ cep +"/json")
-        .subscribe(dado => this.popularDadosForm(dado))
-      }
+    if (cep != null && cep !== "") {
+      this.cepService.consultarCEP(cep)
+      ?.subscribe(dados => this.popularDadosForm(dados))
     }
   }
 
