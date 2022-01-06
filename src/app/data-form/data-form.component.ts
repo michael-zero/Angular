@@ -16,6 +16,7 @@ export class DataFormComponent implements OnInit {
   formulario!: FormGroup
   // estados!: EstadoBr[]
   estados!: Observable<EstadoBr[]>
+  cargos!: any[]
 
   constructor(
     private formBuilder: FormBuilder,
@@ -27,6 +28,7 @@ export class DataFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.estados = this.dropdownService.getEstadosBr()
+    this.cargos  = this.dropdownService.getCargos()
     // Buscando estados
     // this.dropdownService.getEstadosBr()
     // .subscribe(dados => this.estados = dados)
@@ -50,6 +52,8 @@ export class DataFormComponent implements OnInit {
         cidade:[null,Validators.required] ,
         estado:[null,Validators.required]
        })
+       ,
+       cargo: [null]
     })
   }
 
@@ -137,5 +141,13 @@ export class DataFormComponent implements OnInit {
      }})
   }
 
+  setarCargo(){
+    let cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' }
+    this.formulario.get('cargo')?.setValue(cargo)
+  }
+
+  compararCargos(obj1: { nome: any; nivel: any; }, obj2: { nome: any; nivel: any; }) {
+    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+  }
 
 }
