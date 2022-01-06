@@ -77,7 +77,7 @@
       </div>
 
       <div class="col-sm-12">
-        <input readonly formControlName="rua" type="text" class="form-control" id="rua" placeholder="rua">
+        <input readonly formControlName="rua" [ngClass]="aplicaCSSdeErro('endereco.rua')" type="text" class="form-control" id="rua" placeholder="rua">
         <app-campo-control-erro msgErro="Rua é obrigatório." [mostrarErro]="verificaValidTouched('endereco.rua')"></app-campo-control-erro>
 
       </div>
@@ -88,21 +88,21 @@
       <div class="form-row">
         <div class="col-md-5">
           <label for="bairro" class="control-label">Bairro</label>
-          <input formControlName="bairro" type="text" class="form-control" id="bairro"/>
+          <input formControlName="bairro" [ngClass]="aplicaCSSdeErro('endereco.bairro')" type="text" class="form-control" id="bairro"/>
           <app-campo-control-erro msgErro="Bairro é obrigatório." [mostrarErro]="verificaValidTouched('endereco.bairro')"></app-campo-control-erro>
 
         </div>
 
         <div class="col-md-4" [ngClass]="aplicaCSSdeErro('endereco.cidade')">
           <label for="cidade" class="control-label">Cidade</label>
-          <input formControlName="cidade" type="text" class="form-control" id="cidade"/>
+          <input formControlName="cidade" [ngClass]="aplicaCSSdeErro('endereco.cidade')" type="text" class="form-control" id="cidade"/>
         <app-campo-control-erro msgErro="Cidade é obrigatório." [mostrarErro]="verificaValidTouched('endereco.cidade')"></app-campo-control-erro>
 
         </div>
 
         <div class="col-md-3" [ngClass]="aplicaCSSdeErro('endereco.estado')">
           <label for="estado" class="control-label">Estado</label>
-          <input formControlName="estado" type="text" class="form-control" id="estado"/>
+          <input formControlName="estado" [ngClass]="aplicaCSSdeErro('endereco.estado')" type="text" class="form-control" id="estado"/>
           <app-campo-control-erro msgErro="Estado é obrigatório." [mostrarErro]="verificaValidTouched('endereco.estado')"></app-campo-control-erro>
 
         </div>
