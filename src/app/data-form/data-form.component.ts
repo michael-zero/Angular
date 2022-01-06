@@ -74,12 +74,12 @@ export class DataFormComponent implements OnInit {
   buildFrameworks() {
     const values = this.frameworks.map(v => new FormControl(false));
     return this.formBuilder.array(values);
-    //  this.formBuilder.array( [
-    //   new FormControl(false), // angular
-    //   new FormControl(false), // react
-    //   new FormControl(false), // vue
-    //   new FormControl(false) // sencha
-    // ]);
+    /* this.formBuilder.array( [
+      new FormControl(false), // angular
+      new FormControl(false), // react
+      new FormControl(false), // vue
+      new FormControl(false) // sencha
+    ]); */
   }
 
   handleSubmit(){
@@ -106,6 +106,23 @@ export class DataFormComponent implements OnInit {
 
 
     }
+  }
+
+   requiredMinCheckbox(min = 1) {
+    const validator = (formArray: FormArray) => {
+      /* const values = formArray.controls;
+      let totalChecked = 0;
+      for (let i = 0; i < values.length; i++) {
+        if (values[i].value) {
+          totalChecked += 1;
+        }
+      } */
+      const totalChecked = formArray.controls
+        .map(v => v.value)
+        .reduce((total, current) => current ? total + current : total, 0);
+      return totalChecked >= min ? null : { required: true };
+    };
+    return validator;
   }
 
   verificaValidacoesForm(formGroup: FormGroup){
