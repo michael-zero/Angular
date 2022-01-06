@@ -135,6 +135,18 @@
 
     </div>
 
+    <div class="col-md-3" [ngClass]="aplicaCSSdeErro('newsletter')">
+      <label for="newsletter" class="control-label">Newsletter</label>
+      <div id="newsletter"  class="row">
+        <div  class="col-sm-4" *ngFor="let item of newsletterOp">
+          <div class="input-group-text">
+            <input [value]="item.valor" formControlName="newsletter" type="radio"> {{item.desc}}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     </div>
   </div>
 
