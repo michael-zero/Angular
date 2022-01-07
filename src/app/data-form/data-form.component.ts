@@ -1,3 +1,4 @@
+import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { VerificaEmailService } from './services/verifica-email.service';
 import { FormValidations } from './../shared/Form-validations';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
@@ -6,7 +7,7 @@ import { EstadoBr } from './../shared/models/estado-br';
 import { DropdownService } from './../shared/services/dropdown.service';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup , Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { EMPTY, empty, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
@@ -34,21 +35,10 @@ export class DataFormComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // this.verificarEmailService.verificarEmail('email@email.com')
-    // .subscribe()
-
     this.estados = this.dropdownService.getEstadosBr()
     this.cargos  = this.dropdownService.getCargos()
     this.tecnologias = this.dropdownService.getTecnologias()
     this.newsletterOp = this.dropdownService.getNewsletter()
-    // Buscando estados
-    // this.dropdownService.getEstadosBr()
-    // .subscribe(dados => this.estados = dados)
-
-    // this.formulario = new FormGroup({
-    //   nome : new FormControl(null),
-    //   email: new FormControl(null),
-    // })
 
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(5)]],
@@ -72,6 +62,16 @@ export class DataFormComponent implements OnInit {
        termos: [null, Validators.pattern('true')],
        frameworks: this.buildFrameworks()
     })
+
+    this.formulario.get('endereco.cep')?.statusChanges
+    .pipe(
+      distinctUntilChanged(),
+      tap(value => console.log(value)),
+      switchMap(status => status === 'VALID' ?  this.cepService.consultarCEP(this.formulario.get("endereco.cep")?.value) :
+      EMPTY )
+    )
+    .subscribe(dados => dados ? this.popularDadosForm(dados) : {})
+
   }
 
   getCampo(c:string){
