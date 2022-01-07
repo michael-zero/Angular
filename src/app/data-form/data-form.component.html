@@ -14,8 +14,9 @@
         >
           Nome é obrigatório.
       </div> -->
-      <app-campo-control-erro msgErro="Nome é obrigatório."
-      [mostrarErro]="verificaValidTouched('nome')"></app-campo-control-erro>
+      <!-- <app-campo-control-erro msgErro="Nome é obrigatório."
+      [mostrarErro]="verificaValidTouched('nome')"></app-campo-control-erro> -->
+      <app-error-msg [control]="getCampoAbstractControl('nome')" label="Nome"></app-error-msg>
 
     </div>
     </div>
