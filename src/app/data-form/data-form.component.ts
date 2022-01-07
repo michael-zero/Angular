@@ -3,7 +3,7 @@ import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { Component, OnInit } from '@angular/core';
 import { EstadoBr } from './../shared/models/estado-br';
 import { DropdownService } from './../shared/services/dropdown.service';
-import { AbstractControl, AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup , Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -78,27 +78,13 @@ export class DataFormComponent implements OnInit {
 
   buildFrameworks() {
     const values = this.frameworks.map(v => new FormControl(false));
-    return this.formBuilder.array(values, this.minSelectedCheckboxes(1));
+    return this.formBuilder.array(values, FormValidations.minSelectedCheckboxes(1));
   }
 
   getFrameworksControls() {
     return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
   }
 
-  minSelectedCheckboxes(min:number = 1) {
-    const validator: ValidatorFn = (formArray: AbstractControl) => {
-      if (formArray instanceof FormArray) {
-        const totalSelected = formArray.controls
-          .map((control) => control.value)
-          .reduce((prev, next) => (next ? prev + next : prev), 0);
-        return totalSelected >= min ? null : { required: true };
-      }
-
-      throw new Error('formArray is not an instance of FormArray');
-    };
-
-    return validator;
-  }
 
 
   handleSubmit(){
