@@ -8,16 +8,7 @@
 
     <div class="col-sm-12">
       <input  type="text" class="form-control" [ngClass]="aplicaCSSdeErro('nome')" id="nome" formControlName="nome" placeholder="Nome" required>
-
-      <!-- <div *ngIf="verificaValidTouched('nome')"
-        class="alert alert-danger" role="alert"
-        >
-          Nome é obrigatório.
-      </div> -->
-      <!-- <app-campo-control-erro msgErro="Nome é obrigatório."
-      [mostrarErro]="verificaValidTouched('nome')"></app-campo-control-erro> -->
       <app-error-msg [control]="getCampoAbstractControl('nome')" label="Nome"></app-error-msg>
-
     </div>
     </div>
 
@@ -32,8 +23,7 @@
 
     <div class="col-sm-12">
       <input email type="email"  [ngClass]="aplicaCSSdeErro('email')" class="form-control" id="email" formControlName="email" required placeholder="nome@email.com">
-      <app-campo-control-erro msgErro="E-mail é obrigatório." [mostrarErro]="verificaValidTouched('email')"></app-campo-control-erro>
-      <app-campo-control-erro msgErro="E-mail inválido." [mostrarErro]="verificaEmailInvalido()"></app-campo-control-erro>
+      <app-error-msg [control]="getCampoAbstractControl('email')" label="Email"></app-error-msg>
     </div>
     </div>
 
@@ -69,14 +59,16 @@
             <input type="text"
             formControlName="cep"
             class="form-control" id="cep" />
-            <app-campo-control-erro msgErro="CEP é obrigatório" [mostrarErro]="verificaValidTouched('endereco.cep')"></app-campo-control-erro>
-            <app-campo-control-erro [mostrarErro]="temErro()" msgErro="CEP inválido."></app-campo-control-erro>
+            <app-error-msg [control]="getCampoAbstractControl('endereco.cep')" label="CEP"></app-error-msg>
+            <!-- <app-campo-control-erro msgErro="CEP é obrigatório" [mostrarErro]="verificaValidTouched('endereco.cep')"></app-campo-control-erro> -->
+            <!-- <app-campo-control-erro [mostrarErro]="temErro()" msgErro="CEP inválido."></app-campo-control-erro> -->
         </div>
         <!-- NUMERO -->
         <div class="col-md-3">
           <label for="numero" class="control-label">Número</label>
           <input type="text" formControlName="numero" [ngClass]="aplicaCSSdeErro('endereco.numero')" class="form-control" id="numero" />
-          <app-campo-control-erro app-campo-control-erro msgErro="Número inválido" [mostrarErro]="verificaValidTouched('endereco.numero')"></app-campo-control-erro>
+          <!-- <app-campo-control-erro app-campo-control-erro msgErro="Número inválido" [mostrarErro]="verificaValidTouched('endereco.numero')"></app-campo-control-erro> -->
+          <app-error-msg [control]="getCampoAbstractControl('endereco.numero')" label="CEP"></app-error-msg>
 
         </div>
 
