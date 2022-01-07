@@ -1,3 +1,4 @@
+import { BaseFormComponent } from './base-form/base-form.component';
 import { FormsModule } from '@angular/forms';
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +18,7 @@ import { InputFieldComponent } from './input-field/input-field.component';
     CampoControlErroComponent,
     FormDebugComponent,
     ErrorMsgComponent,
-    InputFieldComponent
+    InputFieldComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +30,6 @@ import { InputFieldComponent } from './input-field/input-field.component';
     FormDebugComponent,
     ErrorMsgComponent,
     InputFieldComponent
-
   ],
   providers: [DropdownService]
 })
