@@ -1,16 +1,25 @@
 <form action="" class="form-horizontal" (ngSubmit)="handleSubmit()" [formGroup]="formulario">
+
+
   <div class="form-group">
-    <div class="form-row">
 
-    <div class="col-sm-12">
-      <label for="nome">Nome</label>
-    </div>
+    <app-input-field id="nome"
+    [classeCSS]="aplicaCSSdeErro('nome')"
+    label="nome"
+    formControlName="nome"
+    [control]="getCampoAbstractControl('nome')"
+    ></app-input-field>
 
-    <div class="col-sm-12">
-      <input  type="text" class="form-control" [ngClass]="aplicaCSSdeErro('nome')" id="nome" formControlName="nome" placeholder="Nome" required>
-      <app-error-msg [control]="getCampoAbstractControl('nome')" label="Nome"></app-error-msg>
-    </div>
-    </div>
+    <!-- <div class="form-row">
+      <div class="col-sm-12">
+        <label for="nome">Nome</label>
+      </div>
+
+      <div class="col-sm-12">
+        <input  type="text" class="form-control" [ngClass]="aplicaCSSdeErro('nome')" id="nome" formControlName="nome" placeholder="Nome" required>
+        <app-error-msg [control]="getCampoAbstractControl('nome')" label="Nome"></app-error-msg>
+      </div>
+    </div> -->
 
   </div>
 

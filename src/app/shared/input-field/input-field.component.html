@@ -1,0 +1,15 @@
+<div class="form-group">
+  <!-- <div class="form-row"> -->
+
+  <!-- <div class="col-sm-12"> -->
+    <label [attr.for]="id">{{label}}</label>
+  <!-- </div> -->
+
+  <!-- <div class="col-sm-12"> -->
+    <input  [type]="type" [(ngModel)]="value" class="form-control" [ngClass]="classeCSS" [id]="id">
+    <app-error-msg [control]="control" [label]="label"></app-error-msg>
+    <!-- getCampoAbstractControl('nome') - isso era o que tava no lugar de control  -->
+  <!-- </div> -->
+  <!-- </div> -->
+
+</div>
