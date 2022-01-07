@@ -50,7 +50,7 @@
             formControlName="cep"
             class="form-control" id="cep" />
             <app-campo-control-erro msgErro="CEP é obrigatório" [mostrarErro]="verificaValidTouched('endereco.cep')"></app-campo-control-erro>
-
+            <app-campo-control-erro [mostrarErro]="temErro()" msgErro="CEP inválido."></app-campo-control-erro>
         </div>
         <!-- NUMERO -->
         <div class="col-md-3">
@@ -173,15 +173,14 @@
       <div id="frameworks" class="col">
         <div class="row-12">
           <div class="form-check" formArrayName="frameworks"
-            *ngFor="let item of getControls(); let i = index"
+            *ngFor="let item of getFrameworksControls(); let i = index"
           >
-            <input [formControlName]="i" class="form-check-input" formControlName="termos" type="checkbox" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+            <input [formControlName]="i" class="form-check-input" type="checkbox">
             {{frameworks[i]}}
           </div>
-
-
-
         </div>
+        <p>{{getCampo('frameworks').valid}}</p>
+        <app-campo-control-erro msgErro="Selecione 1 opção." [mostrarErro]="!getCampo('frameworks').valid"></app-campo-control-erro>
       </div>
     </div>
   </div>

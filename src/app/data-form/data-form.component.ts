@@ -1,8 +1,9 @@
+import { FormValidations } from './../shared/Form-validations';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { Component, OnInit } from '@angular/core';
 import { EstadoBr } from './../shared/models/estado-br';
 import { DropdownService } from './../shared/services/dropdown.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AbstractControlOptions, FormArray, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -50,7 +51,7 @@ export class DataFormComponent implements OnInit {
 
       endereco: this.formBuilder.group(
        {
-        cep: [null, [Validators.required]],
+        cep: [null, [Validators.required, FormValidations.cepValidator]],
         numero: [null, [Validators.required]],
         complemento:[null] ,
         rua:[null,Validators.required],
@@ -67,26 +68,41 @@ export class DataFormComponent implements OnInit {
     })
   }
 
-  getControls() {
-    return (this.formulario.get('frameworks') as FormArray).controls;
+  getCampo(c:string){
+    return this.formulario.get(c) as FormArray
+  }
+
+  temErro(){
+    return (this.formulario.get('endereco.cep') as FormArray).hasError('cepInvalido')
   }
 
   buildFrameworks() {
     const values = this.frameworks.map(v => new FormControl(false));
-    return this.formBuilder.array(values);
-    /* this.formBuilder.array( [
-      new FormControl(false), // angular
-      new FormControl(false), // react
-      new FormControl(false), // vue
-      new FormControl(false) // sencha
-    ]); */
+    return this.formBuilder.array(values, this.minSelectedCheckboxes(1));
   }
 
+  getFrameworksControls() {
+    return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
+  }
+
+  minSelectedCheckboxes(min:number = 1) {
+    const validator: ValidatorFn = (formArray: AbstractControl) => {
+      if (formArray instanceof FormArray) {
+        const totalSelected = formArray.controls
+          .map((control) => control.value)
+          .reduce((prev, next) => (next ? prev + next : prev), 0);
+        return totalSelected >= min ? null : { required: true };
+      }
+
+      throw new Error('formArray is not an instance of FormArray');
+    };
+
+    return validator;
+  }
+
+
   handleSubmit(){
-
-
     let valueSubmit = Object.assign({}, this.formulario.value);
-
     valueSubmit = Object.assign(valueSubmit, {
       frameworks: valueSubmit.frameworks
       .map((v:any, i:number) => v ? this.frameworks[i] : null)
@@ -108,22 +124,7 @@ export class DataFormComponent implements OnInit {
     }
   }
 
-   requiredMinCheckbox(min = 1) {
-    const validator = (formArray: FormArray) => {
-      /* const values = formArray.controls;
-      let totalChecked = 0;
-      for (let i = 0; i < values.length; i++) {
-        if (values[i].value) {
-          totalChecked += 1;
-        }
-      } */
-      const totalChecked = formArray.controls
-        .map(v => v.value)
-        .reduce((total, current) => current ? total + current : total, 0);
-      return totalChecked >= min ? null : { required: true };
-    };
-    return validator;
-  }
+
 
   verificaValidacoesForm(formGroup: FormGroup){
     Object.keys(formGroup.controls).forEach(campo => {
@@ -139,6 +140,13 @@ export class DataFormComponent implements OnInit {
   verificaValidTouched(campo:string) : boolean {
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched as boolean
   }
+
+  // verificaRequired(campo:string) : boolean {
+  //   return (
+  //     !this.formulario.get(campo)?.valid && (this.formulario.get(campo)?.touched || this.formulario.get(campo)?.dirty)
+  //   )
+  //   // return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched as boolean
+  // }
 
   verificaEmailInvalido(){
     let campoEmail = this.formulario.get('email')
