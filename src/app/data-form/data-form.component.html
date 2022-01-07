@@ -38,6 +38,26 @@
 
   </div>
 
+  <!-- Confirmar email -->
+  <div class="form-group">
+    <div class="form-row">
+
+    <div class="col-sm-12">
+    <label for="confirmarEmail">Confirmar e-mail</label>
+    </div>
+
+    <div class="col-sm-12">
+      <input email type="confirmarEmail"  [ngClass]="aplicaCSSdeErro('confirmarEmail')" class="form-control" id="confirmarEmail" formControlName="confirmarEmail" required placeholder="nome@email.com">
+      <app-campo-control-erro msgErro="E-mails não são iguais." [mostrarErro]="confirmarEmail()"></app-campo-control-erro>
+      <app-campo-control-erro msgErro="Validando email" [mostrarErro]="formulario.get('confirmarEmail')?.status === 'PENDING'"></app-campo-control-erro>
+      <app-campo-control-erro msgErro="Email válido" [mostrarErro]="formulario.get('confirmarEmail')?.status === 'VALID'"></app-campo-control-erro>
+      <app-campo-control-erro msgErro="Email ja cadastrado" [mostrarErro]="temErroEmail()"></app-campo-control-erro>
+    </div>
+    </div>
+
+  </div>
+
+
   <!-- ENDERECO -->
   <div formGroupName="endereco">
     <div class="form-group" [ngClass]="aplicaCSSdeErro('endereco.cep')">
@@ -179,7 +199,7 @@
             {{frameworks[i]}}
           </div>
         </div>
-        <p>{{getCampo('frameworks').valid}}</p>
+        <!-- <p>{{getCampo('frameworks').valid}}</p> -->
         <app-campo-control-erro msgErro="Selecione 1 opção." [mostrarErro]="!getCampo('frameworks').valid"></app-campo-control-erro>
       </div>
     </div>

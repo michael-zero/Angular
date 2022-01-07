@@ -1,3 +1,4 @@
+import { VerificaEmailService } from './services/verifica-email.service';
 import { FormValidations } from './../shared/Form-validations';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { Component, OnInit } from '@angular/core';
@@ -5,7 +6,7 @@ import { EstadoBr } from './../shared/models/estado-br';
 import { DropdownService } from './../shared/services/dropdown.service';
 import { FormArray, FormBuilder, FormControl, FormGroup , Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-data-form',
@@ -27,10 +28,14 @@ export class DataFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private dropdownService: DropdownService,
-    private cepService: ConsultaCepService
+    private cepService: ConsultaCepService,
+    private verificarEmailService: VerificaEmailService
     ) { }
 
   ngOnInit(): void {
+
+    // this.verificarEmailService.verificarEmail('email@email.com')
+    // .subscribe()
 
     this.estados = this.dropdownService.getEstadosBr()
     this.cargos  = this.dropdownService.getCargos()
@@ -48,6 +53,7 @@ export class DataFormComponent implements OnInit {
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]],
       email: [null, [Validators.required, Validators.email]],
+      confirmarEmail: [null, [FormValidations.equalsTo("email")], [this.validarEmail.bind(this)]],
 
       endereco: this.formBuilder.group(
        {
@@ -74,6 +80,19 @@ export class DataFormComponent implements OnInit {
 
   temErro(){
     return (this.formulario.get('endereco.cep') as FormArray).hasError('cepInvalido')
+  }
+
+  temErroEmail(){
+    return (this.formulario.get('confirmarEmail') as FormArray).hasError('emailInvalido')
+  }
+
+  confirmarEmail() {
+   let form = this.formulario.get('confirmarEmail') as FormArray;
+   if(form.hasError('equalsTo')){
+     return true
+   }
+
+   return false
   }
 
   buildFrameworks() {
@@ -205,6 +224,11 @@ export class DataFormComponent implements OnInit {
   setarTecnologias() {
     let campoTec = this.formulario.get('tecnologias')
     campoTec?.setValue(['java', 'javascript', 'php']);
+  }
+
+  validarEmail(formControl: FormControl) {
+    return this.verificarEmailService.verificarEmail(formControl.value)
+      .pipe(map(emailExiste => emailExiste ? { emailInvalido: true } : null));
   }
 
 }
