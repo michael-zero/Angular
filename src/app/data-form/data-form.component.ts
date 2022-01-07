@@ -1,3 +1,4 @@
+import { Cidade } from './../shared/models/cidade';
 import { BaseFormComponent } from './../shared/base-form/base-form.component';
 import { distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
 import { VerificaEmailService } from './services/verifica-email.service';
@@ -22,8 +23,9 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   // formulario!: FormGroup
 
-  // estados!: EstadoBr[]
-  estados!: Observable<EstadoBr[]>
+  estados!: EstadoBr[]
+  cidades!: Cidade[]
+  // estados!: Observable<EstadoBr[]>
   cargos!: any[]
   tecnologias!: any[]
   newsletterOp!: any[]
@@ -41,7 +43,9 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
     ngOnInit(){
 
-    this.estados = this.dropdownService.getEstadosBr()
+    // this.estados = this.dropdownService.getEstadosBr()
+    this.dropdownService.getEstadosBr().subscribe(dados => this.estados = dados)
+
     this.cargos  = this.dropdownService.getCargos()
     this.tecnologias = this.dropdownService.getTecnologias()
     this.newsletterOp = this.dropdownService.getNewsletter()
@@ -78,6 +82,15 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
     )
     .subscribe(dados => dados ? this.popularDadosForm(dados) : {})
 
+    this.formulario.get('endereco.estado')?.valueChanges
+    .pipe(
+      tap(estado => console.log("Novo estado ", estado)),
+      map(estado => this.estados.filter((e) => e.sigla === estado )),
+      map(estados => estados && estados.length > 0 ? estados[0].id : EMPTY),
+      switchMap((estadoId) => this.dropdownService.getCidades(estadoId as number)),
+      tap(console.log)
+    )
+    .subscribe(cidades => this.cidades = cidades)
   }
 
   // getCampo(c:string){
@@ -192,7 +205,7 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   }
 
   popularDadosForm(dados: any){
-    console.log(dados)
+    // console.log(dados)
     this.formulario.patchValue(
     {
       endereco: {
