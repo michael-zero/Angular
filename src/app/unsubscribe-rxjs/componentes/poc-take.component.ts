@@ -18,12 +18,14 @@ export class PocTakeComponent implements OnInit, OnDestroy {
   constructor(private service: EnviarValorService) {}
 
   ngOnInit() {
-    // this.service.getValor()
-    //   .pipe(
-    //     tap(v => console.log(this.nome, v)),
-    //     take(1)
-    //   )
-    //   .subscribe(novoValor => this.valor = novoValor);
+    this.service.getValor()
+      .pipe(
+        tap(v => console.log(this.nome, v)),
+        take(1) //quantas vezes quero receber a resposta ..
+        //emite request , recebeu , cancela inscricao ..
+        //observable completo
+      )
+      .subscribe(novoValor => this.valor = novoValor);
   }
 
   ngOnDestroy() {
