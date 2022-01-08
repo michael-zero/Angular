@@ -1,3 +1,4 @@
+import { CursosListaComponent } from './cursos/cursos-lista/cursos-lista.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -6,8 +7,9 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
-  ],
+    AppComponent,
+    CursosListaComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule
