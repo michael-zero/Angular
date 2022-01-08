@@ -16,22 +16,22 @@ export class PocTakeUntilComponent implements OnInit, OnDestroy {
   nome = 'Componente com takeUntil';
   valor!: string;
 
-  unsub$ = new Subject();
+  unsub$ = new Subject(); //novo observable
 
   constructor(private service: EnviarValorService) {}
 
   ngOnInit() {
-    // this.service.getValor()
-    //   .pipe(
-    //     tap(v => console.log(this.nome, v)),
-    //     takeUntil(this.unsub$)
-    //   )
-    //   .subscribe(novoValor => this.valor = novoValor);
+    this.service.getValor()
+      .pipe(
+        tap(v => console.log(this.nome, v)),
+        takeUntil(this.unsub$)
+      )
+      .subscribe(novoValor => this.valor = novoValor);
   }
 
   ngOnDestroy() {
-    // this.unsub$.next();
-    // this.unsub$.complete();
-    // console.log(`${this.nome} foi destruido`);
+    this.unsub$.next('z');
+    this.unsub$.complete();
+    console.log(`${this.nome} foi destruido`);
   }
 }
