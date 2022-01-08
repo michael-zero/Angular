@@ -4,12 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CursosListaComponent } from './cursos/cursos-lista/cursos-lista.component';
+import { UnsubscribeRxjsComponent } from './unsubscribe-rxjs/unsubscribe-rxjs.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
-    CursosListaComponent
+    CursosListaComponent,
+      UnsubscribeRxjsComponent
    ],
   imports: [
     BrowserModule,
