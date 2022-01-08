@@ -6,17 +6,18 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-poc-async',
   template: `
-    <!-- <app-poc-base [nome]="nome"
-      [valor]="valor$ | async" estilo="bg-success">
-    </app-poc-base> -->
+    <app-poc-base [nome]="nome"
+      [valor]="valor" estilo="bg-success">
+    </app-poc-base>
   `
 })
 export class PocAsyncComponent implements OnInit, OnDestroy {
 
   nome = 'Componente com async';
+  valor!: string
   valor$!: Observable<string>;
 
-  constructor() { }
+  constructor(private service: EnviarValorService) { }
 
   ngOnInit() {
     // this.valor$ = this.service.getValor()

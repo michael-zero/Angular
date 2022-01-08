@@ -18,7 +18,7 @@ export class PocUnsubComponent implements OnInit, OnDestroy {
 
   sub: Subscription[] = [];
 
-  constructor() { }
+  constructor(private service: EnviarValorService) { }
 
   ngOnInit() {
     // this.sub.push(this.service.getValor()

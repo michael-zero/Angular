@@ -8,10 +8,10 @@ import { UnsubscribeRxjsComponent } from './unsubscribe-rxjs/unsubscribe-rxjs.co
 
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     CursosListaComponent,
-      UnsubscribeRxjsComponent
+    UnsubscribeRxjsComponent
    ],
   imports: [
     BrowserModule,

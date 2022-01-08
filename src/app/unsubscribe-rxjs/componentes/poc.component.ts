@@ -17,6 +17,7 @@ export class PocComponent implements OnInit, OnDestroy {
 
   constructor(private service: EnviarValorService) { }
 
+  //fazendo inscricao do servico de emissao de valor
   ngOnInit() {
     this.service.getValor()
       .pipe(tap(v => console.log(this.nome, v)))
