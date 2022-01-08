@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   selector: 'app-poc-async',
   template: `
     <app-poc-base [nome]="nome"
-      [valor]="valor" estilo="bg-success">
+      [valor]="valor$ | async" estilo="bg-success">
     </app-poc-base>
   `
 })
@@ -15,13 +15,14 @@ export class PocAsyncComponent implements OnInit, OnDestroy {
 
   nome = 'Componente com async';
   valor!: string
-  valor$!: Observable<string>;
+  valor$!: Observable<string>; //observable para fazer inscricao
 
   constructor(private service: EnviarValorService) { }
 
   ngOnInit() {
-    // this.valor$ = this.service.getValor()
-    //   .pipe(tap(v => console.log(this.nome, v)));
+    //observe que nao tem o subscribe()
+    this.valor$ = this.service.getValor()
+      .pipe(tap(v => console.log(this.nome, v)));
   }
 
   ngOnDestroy() {

@@ -16,19 +16,24 @@ export class PocUnsubComponent implements OnInit, OnDestroy {
   nome = 'Componente com unsubscribe';
   valor!: string;
 
-  sub: Subscription[] = [];
+  // sub: Subscription[] = [];
+  sub!: Subscription;
 
   constructor(private service: EnviarValorService) { }
 
+  //subscribe retorna uma subscription
   ngOnInit() {
+    this.sub = this.service.getValor().subscribe(novoV => this.valor = novoV)
+    //array de inscricoes
     // this.sub.push(this.service.getValor()
     //   .pipe(tap(v => console.log(this.nome, v)))
     //   .subscribe(novoValor => this.valor = novoValor));
   }
 
   ngOnDestroy() {
+    this.sub.unsubscribe()
     // this.sub.forEach(s => s.unsubscribe());
-    // console.log(`${this.nome} foi destruido`);
+    console.log(`${this.nome} foi destruido`);
   }
 
 }
