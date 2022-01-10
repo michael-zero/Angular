@@ -37,7 +37,7 @@ export class CursosFormComponent implements OnInit {
     this.route.params
     .pipe(
       map(params => params['id']),
-      switchMap((id:number) => this.service.loadById(id))
+      switchMap((id:number) => this.service.loadById(id)) //outro observable
     )
     .subscribe((curso) => this.updateForm(curso))
 
