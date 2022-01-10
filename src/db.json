@@ -7,6 +7,18 @@
     {
       "id": 2,
       "nome": "React"
+    },
+    {
+      "nome": "Python",
+      "id": 3
+    },
+    {
+      "nome": "HTML 5",
+      "id": 4
+    },
+    {
+      "nome": "Docker",
+      "id": 5
     }
   ]
 }
