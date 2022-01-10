@@ -26,7 +26,4 @@ export class CursoResolverGuard implements Resolve<CursoNovo> {
       nome: null
     })
   }
-
-
-
 }

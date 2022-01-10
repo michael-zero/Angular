@@ -9,16 +9,28 @@
       "nome": "React"
     },
     {
-      "nome": "Python",
-      "id": 3
+      "id": 3,
+      "nome": "Python 3"
     },
     {
-      "nome": "HTML 5",
-      "id": 4
+      "id": 4,
+      "nome": "Nodejs"
     },
     {
       "nome": "Docker",
       "id": 5
+    },
+    {
+      "id": 6,
+      "nome": "Linux"
+    },
+    {
+      "id": 7,
+      "nome": "Bootstrap 4"
+    },
+    {
+      "id": 8,
+      "nome": "CSS e HTML "
     }
   ]
 }

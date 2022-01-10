@@ -53,6 +53,9 @@ export class CursosFormComponent implements OnInit {
       id: [curso.id],
       nome: [curso.nome, [Validators.required, Validators.minLength(3), Validators.maxLength(25)]]
     })
+
+    console.log(curso)
+
   }
 
   hasError(field: string) {
@@ -62,15 +65,49 @@ export class CursosFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.service.create(this.form.value)
-        .subscribe({
-          next: (v) => {
-            this.modal.showAlertSuccess('Criado com sucesso.')
-            this.location.back()
-          },
-          error: (e) => this.modal.showAlertDanger('Erro ao criar curso, tente novamente!'),
-          complete: () => console.info('complete')
-        })
+
+      let msgSucesso = 'Curso criado com sucesso.'
+      let msgErro = 'Erro ao criar curso, tente novamente!'
+
+      if(this.form.value.id){
+        msgSucesso = 'Curso atualizado com sucesso.'
+        msgErro = 'Erro ao atualizar curso, tente novamente!'
+      }
+
+      this.service.save(this.form.value)
+      .subscribe({
+        next: (v) => {
+          this.modal.showAlertSuccess(msgSucesso)
+          this.location.back()
+        },
+        error: (e) => this.modal.showAlertDanger(msgErro)
+      })
+
+      // if(this.form.value.id){
+      //   //edit
+      //   this.service.update(this.form.value)
+      //   .subscribe({
+      //     next: (v) => {
+      //       this.modal.showAlertSuccess('Curso atualizado com sucesso.')
+      //       this.location.back()
+      //     },
+      //     error: (e) => this.modal.showAlertDanger('Erro ao atualizar curso, tente novamente!'),
+      //     complete: () => console.info('update complete')
+      //   })
+
+
+      // }else{
+      //   //create
+      //   this.service.create(this.form.value)
+      //   .subscribe({
+      //     next: (v) => {
+      //       this.modal.showAlertSuccess('Criado com sucesso.')
+      //       this.location.back()
+      //     },
+      //     error: (e) => this.modal.showAlertDanger('Erro ao criar curso, tente novamente!'),
+      //     complete: () => console.info('complete')
+      //   })
+      // }
     }
   }
 
