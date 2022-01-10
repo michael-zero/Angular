@@ -7,6 +7,7 @@ import { CursosService } from '../cursos.service';
 import { catchError, EMPTY, Observable, tap, Subject, switchMap } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Cursos2Service } from '../cursos2.service';
 
 @Component({
   selector: 'app-cursos-lista',
@@ -29,7 +30,7 @@ export class CursosListaComponent implements OnInit {
   cursoSelecionado!: Curso
 
   constructor(
-    private cursosService: CursosService,
+    private cursosService: Cursos2Service,
     private modalService: BsModalService,
     private alertModalService: AlertModalService,
     private route: ActivatedRoute,
