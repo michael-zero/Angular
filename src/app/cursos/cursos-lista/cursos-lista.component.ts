@@ -1,6 +1,6 @@
 import { AlertModalService } from './../../shared/alert-modal.service';
 import { AlertModalComponent } from './../../shared/alert-modal/alert-modal.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Curso } from '../curso';
 import { CursosService } from '../cursos.service';
 import { catchError, EMPTY, Observable, tap, Subject } from 'rxjs';
@@ -20,11 +20,13 @@ export class CursosListaComponent implements OnInit {
   error$ = new Subject<boolean>(); //objeto que consegue emitir valores
 
   //Modal
-  bsModalRef?: BsModalRef;
+  bsModalRef!: BsModalRef;
+  deleteModalRef!: BsModalRef
+  @ViewChild('deleteModal') deleteModal:any;
 
   constructor(
     private cursosService: CursosService,
-    // private modalService: BsModalService,
+    private modalService: BsModalService,
     private alertModalService: AlertModalService,
     private route: ActivatedRoute,
     private router: Router) { }
@@ -59,6 +61,10 @@ export class CursosListaComponent implements OnInit {
 
   onEdit(idCurso: number) {
     this.router.navigate(['editar', idCurso], { relativeTo: this.route })
+  }
+
+  onDelete(curso: Curso):void{
+    this.deleteModalRef = this.modalService.show(this.deleteModal, {class: 'modal-sm'})
   }
 
 
