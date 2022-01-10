@@ -46,11 +46,17 @@ export class CursosService {
     )
   }
 
-  save(curso: Curso){
+  public save(curso: Curso){
     if(curso.id){
       return this.update(curso)
     }
     return this.create(curso)
+  }
+
+  public delete(id: number){
+    return this.http.delete(`${this.API}/${id}`).pipe(
+      take(1)
+    )
   }
 
 }

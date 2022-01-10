@@ -24,6 +24,9 @@ export class CursosListaComponent implements OnInit {
   deleteModalRef!: BsModalRef
   @ViewChild('deleteModal') deleteModal:any;
 
+  //remocaoDoCurso
+  cursoSelecionado!: Curso
+
   constructor(
     private cursosService: CursosService,
     private modalService: BsModalService,
@@ -64,7 +67,29 @@ export class CursosListaComponent implements OnInit {
   }
 
   onDelete(curso: Curso):void{
+    this.cursoSelecionado = curso
     this.deleteModalRef = this.modalService.show(this.deleteModal, {class: 'modal-sm'})
+  }
+
+  onConfirmDelete(){
+    this.cursosService.delete(this.cursoSelecionado.id)
+    .subscribe(
+           {
+             next: (v) => {
+               this.onRefresh()
+               this.onDeclineDelete()
+
+              },
+             error: () => {this.alertModalService.showAlertDanger('Erro ao remover curso. Tente novamente mais tarde.')
+             this.onDeclineDelete()
+            }
+           }
+    )
+
+  }
+
+  onDeclineDelete(){
+    this.deleteModalRef.hide()
   }
 
 
