@@ -1,6 +1,9 @@
 import { CursosRoutingModule } from './cursos-routing.module';
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { CursosFormComponent } from './cursos-form/cursos-form.component';
 
 @NgModule({
@@ -9,7 +12,8 @@ import { CursosFormComponent } from './cursos-form/cursos-form.component';
   ],
   imports: [
     CommonModule,
-    CursosRoutingModule
+    CursosRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class CursosModule { }
