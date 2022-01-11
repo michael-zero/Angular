@@ -1,3 +1,4 @@
+import { UploadFileService } from './../upload-file.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,14 +9,20 @@ import { Component, OnInit } from '@angular/core';
 export class UploadFileComponent implements OnInit {
 
   progress!:string
-  files!:boolean
+  files!: Set<File>
 
-  constructor() { }
+
+  constructor(private service: UploadFileService) { }
 
   ngOnInit(): void {
   }
 
-  onUpload(){}
+  onUpload(){
+    if(this.files && this.files.size > 0){
+      this.service.upload(this.files, 'http://localhost:8080/upload')
+      .subscribe(r => console.log('Upload concluido'))
+    }
+  }
   onDownloadExcel(){}
   onDownloadPDF(){}
 
@@ -30,9 +37,12 @@ export class UploadFileComponent implements OnInit {
 
     // const file = input.files[0];
     const fileNames = []
+    //criando o conjunt para os arquivos
+    this.files = new Set()
 
     for(let i = 0; i < input.files.length; i++){
       fileNames.push(input.files[i].name)
+      this.files.add(input.files[i])
     }
 
     //setando os nomes dos arquivos selecionados na pagina
