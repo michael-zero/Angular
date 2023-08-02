@@ -4,13 +4,8 @@ import { FormGroup, FormArray, AbstractControl } from '@angular/forms';
 export abstract class BaseFormComponent  {
 
   formulario!: FormGroup;
-
-
   constructor() { }
-
-
-
-  abstract submit():boolean;
+  abstract submit():any;
 
   onSubmit() {
     if (this.formulario.valid) {

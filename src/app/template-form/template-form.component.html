@@ -7,6 +7,7 @@
     </div>
 
     <div class="col-sm-12">
+      <!-- #nome="ngModel" associa o nome ao formulario ai vai aparecer o valor -->
       <input #nome="ngModel" type="text" class="form-control" id="nome" name="nome" [(ngModel)]="usuario.nome" placeholder="Nome" required>
       <!-- <div *ngIf="!nome.valid && nome.touched"
       class="alert alert-danger" role="alert"
@@ -42,7 +43,8 @@
           <!-- CEP -->
           <div class="col-md-3">
               <label for="cep" class="control-label">CEP</label>
-              <input type="text" (blur)="consultarCEP(cep.value, f)" class="form-control" id="cep" name="cep" ngModel required #cep="ngModel"/>
+              <input type="text" (blur)="consultarCEP(cep.value, f)" class="form-control" id="cep" name="cep" 
+              ngModel required #cep="ngModel"/>
               <app-campo-control-erro msgErro="CEP é obrigatório" [mostrarErro]="verificaValidTouched(cep)"></app-campo-control-erro>
 
           </div>

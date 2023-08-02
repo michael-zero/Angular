@@ -1,14 +1,22 @@
-<form action="" class="form-horizontal" (ngSubmit)="handleSubmit()" [formGroup]="formulario">
+<form action="" class="form-horizontal" (ngSubmit)="submit()" [formGroup]="formulario">
 
 
   <div class="form-group">
+
+    <!-- <input email type="nome"  [ngClass]="aplicaCSSdeErro('nome')" class="form-control" id="nome" formControlName="nome"
+      placeholder="Nome">
+    <app-error-msg [control]="getCampoAbstractControl('nome')" label="nome"></app-error-msg> -->
 
     <app-input-field id="nome"
     [classeCSS]="aplicaCSSdeErro('nome')"
     label="nome"
     formControlName="nome"
-    [control]="getCampoAbstractControl('nome')"
+    [control]="formulario.get('nome')"
     ></app-input-field>
+    <!-- <input  type="text" class="form-control" [ngClass]="aplicaCSSdeErro('nome')"
+     id="nome" formControlName="nome" placeholder="Nome" required> -->
+    <!-- <app-error-msg [control]="getCampoAbstractControl('nome')" label="Nome"></app-error-msg> -->
+
 
     <!-- <div class="form-row">
       <div class="col-sm-12">
@@ -155,7 +163,8 @@
     <div class="col-md-3" [ngClass]="aplicaCSSdeErro('cargo')">
       <label for="cargo" class="control-label">Cargo</label>
       <!-- Criando o Select para cargo -->
-      <select id="cargo" formControlName="cargo" [compareWith]="compararCargos" class="form-control" >
+      <select id="cargo" formControlName="cargo"
+      [compareWith]="compararCargos" class="form-control" >
           <option *ngFor="let cargo of cargos" [ngValue]="cargo">{{cargo.desc}}</option>
       </select>
 

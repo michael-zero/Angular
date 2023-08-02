@@ -17,12 +17,7 @@ import { EMPTY, empty, map, Observable } from 'rxjs';
   styleUrls: ['./data-form.component.css']
 })
 export class DataFormComponent extends BaseFormComponent implements OnInit {
-
-
-
-
   // formulario!: FormGroup
-
   estados!: EstadoBr[]
   cidades!: Cidade[]
   // estados!: Observable<EstadoBr[]>
@@ -73,6 +68,7 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
        frameworks: this.buildFrameworks()
     })
 
+    //validacoes assincronas
     this.formulario.get('endereco.cep')?.statusChanges
     .pipe(
       distinctUntilChanged(),
@@ -126,32 +122,6 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   getFrameworksControls() {
     return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
   }
-
-
-
-  handleSubmit(){
-    let valueSubmit = Object.assign({}, this.formulario.value);
-    valueSubmit = Object.assign(valueSubmit, {
-      frameworks: valueSubmit.frameworks
-      .map((v:any, i:number) => v ? this.frameworks[i] : null)
-      .filter((v:any) => v !== null)
-    });
-
-    console.log(valueSubmit)
-
-    if(this.formulario.valid){
-      this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit))
-      .subscribe(dados => {
-        console.log(dados)
-      })
-    }else{
-      console.log("Formulário inválido.")
-      this.verificaValidacoesForm(this.formulario)
-
-
-    }
-  }
-
 
 
   // verificaValidacoesForm(formGroup: FormGroup){
@@ -255,8 +225,41 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
       .pipe(map(emailExiste => emailExiste ? { emailInvalido: true } : null));
   }
 
-  submit(): boolean {
-    throw new Error('Method not implemented.');
-  }
 
+  // handleSubmit(){
+  //   let valueSubmit = Object.assign({}, this.formulario.value);
+  //   valueSubmit = Object.assign(valueSubmit, {
+  //     frameworks: valueSubmit.frameworks
+  //     .map((v:any, i:number) => v ? this.frameworks[i] : null)
+  //     .filter((v:any) => v !== null)
+  //   });
+
+  //   if(this.formulario.valid){
+  //     this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit))
+  //     .subscribe(dados => {
+  //       console.log(dados)
+  //     })
+  //   }else{
+  //     console.log("Formulário inválido.")
+  //     this.verificaValidacoesForm(this.formulario)
+  //   }
+  // }
+
+  submit() {
+    console.log(this.formulario);
+
+    let valueSubmit = Object.assign({}, this.formulario.value);
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+      .map((v:any, i:number) => v ? this.frameworks[i] : null)
+      .filter((v:any) => v !== null)
+    });
+
+    console.log(valueSubmit);
+
+    this.http.post('https://httpbin.org/post', JSON.stringify(valueSubmit))
+    .subscribe(dados => {
+      console.log(dados)
+    })
+  }
 }

@@ -13,7 +13,6 @@ export class FormValidations {
 
       throw new Error('formArray is not an instance of FormArray');
     };
-
     return validator;
   }
 
@@ -51,12 +50,14 @@ export class FormValidations {
         throw new Error('É necessário informar um campo.');
       }
 
-      //campon nem formulario nao esta pronto para ser validado
+      //campo  e formulario nao esta prontos para ser validado
+      //.controls lista todos os campos do formulário
       if (!formControl.root || !(<FormGroup>formControl.root).controls) {
         return null;
       }
 
-      //se existe o campo, entao obtem o outro
+      //se existe o campo, entao obtem o outro //pegando o group
+      //o parent seria o campo acima definido no form
       const field = (<FormGroup>formControl.root).get(otherField);
 
       //se o campo informado n for valido
